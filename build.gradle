@@ -1,0 +1,24 @@
+apply plugin: 'groovy' 	// adds groovy support
+apply plugin: 'war'		// adds support for packing war files
+apply plugin: 'jetty'	// allows us to run war locally
+apply plugin: 'eclipse'	// helps interface with eclipse by generating project files
+
+logging.captureStandardOutput LogLevel.INFO
+
+repositories {
+    mavenCentral() // adds main maven repo
+	maven { url 'http://www.springsource.com/repository/' }  // springsource repo
+}
+
+dependencies {
+	groovy 'org.codehaus.groovy:groovy:1.8.8'
+	compile 'org.slf4j:slf4j-api:1.6.6'
+	runtime 'org.slf4j:nlog4j:1.2.25'
+	compile 'org.springframework:spring-webmvc:3.1.0.RELEASE'
+	compile 'javax.servlet:servlet-api:2.5'
+}
+
+war {
+	webXml = file('src/webapp/web.xml')
+	webInf { from 'src/webapp' }
+}
